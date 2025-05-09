@@ -5,7 +5,7 @@
 
 ## 🚀 Demo
 
-**[PROVA L'APPLICAZIONE ONLINE](https://owly-project.netlify.app/)**
+**[PROVA L'APPLICAZIONE ONLINE](https://owlyprojects.netlify.app/)**
 
 ## 📝 Descrizione
 
