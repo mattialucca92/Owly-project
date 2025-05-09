@@ -1,0 +1,246 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  padding: 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+  color: #2d3436;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.mb-3 {
+  margin-bottom: 1.5rem;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-control {
+  text-align: center;
+  border: 2px solid #dfe6e9;
+  margin-bottom: 1rem;
+  font-family: "Poppins", sans-serif;
+}
+
+.form-control:focus {
+  border-color: #fd79a8;
+  box-shadow: 0 0 0 0.25rem rgba(253, 121, 168, 0.25);
+}
+
+#btn-categoria {
+  background: linear-gradient(to right, #fd79a8, #e84393);
+  border: none;
+  padding: 0.6rem 2rem;
+  margin: 0 auto;
+  display: block;
+  border-radius: 30px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+#btn-categoria:hover {
+  background: linear-gradient(to right, #e84393, #fd79a8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(232, 67, 147, 0.4);
+}
+
+#risultati {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+  width: 100% !important;
+  background: linear-gradient(to bottom, #ffffff, #f7f7ff);
+  text-align: center;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
+}
+
+.card-body {
+  padding: 1.5rem;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+  height: 100%;
+}
+
+.card-title {
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+  color: #0984e3;
+  grid-row: 1;
+}
+
+.card-text {
+  color: #636e72;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  grid-row: 2;
+}
+
+.card .btn-primary {
+  padding: 0.5rem 1.5rem;
+  font-size: 0.9rem;
+  background: linear-gradient(to right, #0984e3, #74b9ff);
+  font-family: "Poppins", sans-serif;
+  grid-row: 4;
+  align-self: end;
+  justify-self: center;
+}
+
+.card:hover {
+  transform: translateY(-15px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+.card .btn-primary:hover {
+  background: linear-gradient(to right, #74b9ff, #0984e3);
+  box-shadow: 0 4px 15px rgba(9, 132, 227, 0.4);
+}
+
+.form-label {
+  color: #6c5ce7;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 1rem;
+  }
+
+  #risultati {
+    grid-template-columns: 1fr;
+  }
+
+  #btn-categoria {
+    width: 80%;
+  }
+}
+
+/* CSS PER MODALE */
+
+/* Modal CSS che mantiene lo stile del CSS originale */
+.modal-dialog {
+  max-width: 500px;
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  border: none;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(to bottom, #ffffff, #f7f7ff);
+}
+
+.modal-header {
+  border-bottom: 1px solid #f0f0f7;
+  padding: 1.5rem;
+  background: linear-gradient(to right, #f5f7fa, #e4e8f0);
+}
+
+.modal-title {
+  font-weight: 600;
+  color: #0984e3;
+  font-family: "Poppins", sans-serif;
+}
+
+.btn-close {
+  transition: all 0.3s ease;
+}
+
+.btn-close:hover {
+  transform: rotate(90deg);
+}
+
+.modal-body {
+  padding: 1.5rem;
+  color: #636e72;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-family: "Poppins", sans-serif;
+}
+
+.modal-footer {
+  border-top: 1px solid #f0f0f7;
+  padding: 1.25rem;
+}
+
+.modal-footer .btn-secondary {
+  background: linear-gradient(to right, #0984e3, #74b9ff);
+  border: none;
+  padding: 0.6rem 2rem;
+  border-radius: 30px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  font-family: "Poppins", sans-serif;
+}
+
+.modal-footer .btn-secondary:hover {
+  background: linear-gradient(to right, #74b9ff, #0984e3);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(9, 132, 227, 0.4);
+}
+
+/* Animazione fade del modal */
+.modal.fade .modal-dialog {
+  transition: transform 0.3s ease-out;
+  transform: translateY(-10px);
+}
+
+.modal.show .modal-dialog {
+  transform: translateY(0);
+}
+
+.fade {
+  transition: opacity 0.15s linear;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .modal-dialog {
+    margin: 1rem;
+    width: calc(100% - 2rem);
+  }
+
+  .modal-footer .btn-secondary {
+    padding: 0.5rem 1.5rem;
+  }
+}
+
+/* inserimento loader */
+
+#loader::after {
+  content: "";
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid lightgray;
+  border-top: 3px solid #007bff;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  margin-left: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
