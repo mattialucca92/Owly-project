@@ -1,7 +1,6 @@
 # Owly
 
-![Screenshot 2025-03-01 161110](https://github.com/user-attachments/assets/305b8ebc-e7ea-4061-a244-3634631d7216)
-![Screenshot 2025-03-01 161126](https://github.com/user-attachments/assets/73bfa652-1a48-430d-8ae1-b4332ecd8837)
+![Screenshot 2025-05-09 172806](https://github.com/user-attachments/assets/b69f1297-46de-4ee1-836a-b3e362530afe)
 
 ## 🚀 Demo
 
