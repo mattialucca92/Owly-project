@@ -1,4 +1,3 @@
-
 $(document).ready(function () {
   $("#btn-categoria").click(function () {
     let categoria = $("#categoria").val().trim().toLowerCase();
@@ -64,11 +63,25 @@ $(document).ready(function () {
       method: "GET",
       dataType: "json",
       success: function (data) {
-        console.log(data);
-        let description = data.description.value;
+        let description = "Descrizione non disponibile";
+
+        if (data.description) {
+          if (typeof data.description === "string") {
+            description = data.description;
+          } else if (
+            typeof data.description === "object" &&
+            data.description.value
+          ) {
+            description = data.description.value;
+          }
+        }
+
         $("#modale-description").text(description);
       },
       error: function (error) {
+        $("#modale-description").text(
+          "Errore nel caricamento della descrizione"
+        );
         console.error("Errore durante la richiesta:", error);
       },
     });
