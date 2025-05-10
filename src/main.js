@@ -1,89 +1,87 @@
-$(document).ready(function () {
-  $("#btn-categoria").click(function () {
-    let categoria = $("#categoria").val().trim().toLowerCase();
-    if (categoria === "") {
-      alert("Compila il campo categoria");
-      return;
-    }
+document.getElementById("btn-categoria").addEventListener("click", function () {
+  const categoriaInput = document.getElementById("categoria");
+  const categoria = _.toLower(_.trim(categoriaInput.value));
 
-    $("#loader").show();
-    $("#risultati").empty();
+  if (_.isEmpty(categoria)) {
+    alert("Compila il campo categoria");
+    return;
+  }
 
-    let pathJson = `https://openlibrary.org/subjects/${categoria}.json`;
+  document.getElementById("loader").style.display = "block";
+  document.getElementById("risultati").innerHTML = "";
 
-    $.ajax({
-      url: pathJson,
-      method: "GET",
-      dataType: "json",
-      success: function (data) {
-        $("#loader").hide();
-        $("#risultati").empty();
+  const pathJson = `https://openlibrary.org/subjects/${categoria}.json`;
 
-        if (data.works.length === 0) {
-          $("#risultati").append(
-            `<p>Nessun risultato trovato per la categoria inserita.</p>`
-          );
-          return;
-        }
+  axios
+    .get(pathJson)
+    .then(function (response) {
+      document.getElementById("loader").style.display = "none";
+      const risultati = document.getElementById("risultati");
+      risultati.innerHTML = "";
 
-        data.works.forEach((libro) => {
-          let titolo = libro.title;
-          let autore = libro.authors
-            ? libro.authors.map((n) => n.name).join(" - ")
-            : "Autore non disponibile";
-          let key = libro.key;
+      const data = response.data;
 
-          $("#risultati").append(`
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h5 class="card-title">${titolo}</h5>
-        <p class="card-text">${autore}</p>
-        <button class="btn btn-primary btn-dettaglio" data-key="${key}" data-titolo="${titolo}" data-bs-toggle="modal" data-bs-target="#desc-modal">
-          Clicca per vedere dettaglio
-        </button>
-      </div>
-    </div>
-  `);
-        });
-      },
-      error: function (error) {
-        $("#loader").hide();
-        console.error("Errore durante la richiesta:", error);
-      },
+      if (_.isEmpty(data.works)) {
+        risultati.innerHTML = `<p>Nessun risultato trovato per la categoria inserita.</p>`;
+        return;
+      }
+
+      _.forEach(data.works, (libro) => {
+        const titolo = libro.title;
+        const autore = libro.authors
+          ? _.map(libro.authors, "name").join(" - ")
+          : "Autore non disponibile";
+        const key = libro.key;
+
+        risultati.innerHTML += `
+          <div class="card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">${titolo}</h5>
+              <p class="card-text">${autore}</p>
+              <button class="btn btn-primary btn-dettaglio" data-key="${key}" data-titolo="${titolo}" data-bs-toggle="modal" data-bs-target="#desc-modal">
+                Clicca per vedere dettaglio
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    })
+    .catch(function (error) {
+      document.getElementById("loader").style.display = "none";
+      console.error("Errore durante la richiesta:", error);
     });
-  });
+});
 
-  $(document).on("click", ".btn-dettaglio", function () {
-    let key = $(this).data("key");
-    let titoloModale = $(this).data("titolo");
-    $("#title-modal").text(titoloModale);
-    let path = `https://openlibrary.org${key}.json`;
-    $.ajax({
-      url: path,
-      method: "GET",
-      dataType: "json",
-      success: function (data) {
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("btn-dettaglio")) {
+    const button = event.target;
+    const key = button.getAttribute("data-key");
+    const titoloModale = button.getAttribute("data-titolo");
+
+    document.getElementById("title-modal").textContent = titoloModale;
+
+    const path = `https://openlibrary.org${key}.json`;
+
+    axios
+      .get(path)
+      .then(function (response) {
+        const data = response.data;
         let description = "Descrizione non disponibile";
 
-        if (data.description) {
-          if (typeof data.description === "string") {
+        if (!_.isEmpty(data.description)) {
+          if (_.isString(data.description)) {
             description = data.description;
-          } else if (
-            typeof data.description === "object" &&
-            data.description.value
-          ) {
+          } else if (_.isObject(data.description) && data.description.value) {
             description = data.description.value;
           }
         }
 
-        $("#modale-description").text(description);
-      },
-      error: function (error) {
-        $("#modale-description").text(
-          "Errore nel caricamento della descrizione"
-        );
+        document.getElementById("modale-description").textContent = description;
+      })
+      .catch(function (error) {
+        document.getElementById("modale-description").textContent =
+          "Errore nel caricamento della descrizione";
         console.error("Errore durante la richiesta:", error);
-      },
-    });
-  });
+      });
+  }
 });
