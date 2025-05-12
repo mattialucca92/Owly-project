@@ -1,4 +1,8 @@
 // vite.config.js
 export default {
-  root: ".",
+  base: "./", // Usa percorsi relativi invece di assoluti
+  build: {
+    outDir: "dist",
+    // altre configurazioni...
+  },
 };
