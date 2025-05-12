@@ -1,5 +1,20 @@
-document.getElementById("btn-categoria").addEventListener("click", function () {
-  const categoriaInput = document.getElementById("categoria");
+// Elementi DOM centrali
+const btnCategoria = document.getElementById("btn-categoria");
+const btnLoadMore = document.getElementById("btn-load-more");
+const categoriaInput = document.getElementById("categoria");
+const loader = document.getElementById("loader");
+const risultati = document.getElementById("risultati");
+const loadMoreContainer = document.getElementById("load-more-container");
+const titleModal = document.getElementById("title-modal");
+const modalDescription = document.getElementById("modale-description");
+
+// Variabili globali per la paginazione
+let currentCategory = "";
+let currentPage = 1;
+const resultsPerPage = 10;
+
+// Event listener per la ricerca
+btnCategoria.addEventListener("click", function () {
   const categoria = _.toLower(_.trim(categoriaInput.value));
 
   if (_.isEmpty(categoria)) {
@@ -7,22 +22,42 @@ document.getElementById("btn-categoria").addEventListener("click", function () {
     return;
   }
 
-  document.getElementById("loader").style.display = "block";
-  document.getElementById("risultati").innerHTML = "";
+  // Reset paginazione
+  currentCategory = categoria;
+  currentPage = 1;
 
-  const pathJson = `https://openlibrary.org/subjects/${categoria}.json`;
+  loader.style.display = "block";
+  risultati.innerHTML = "";
+  loadMoreContainer.style.display = "none";
+
+  loadBooks(currentCategory, currentPage);
+});
+
+// Funzione per caricare i libri
+function loadBooks(category, page) {
+  const pathJson = `https://openlibrary.org/subjects/${category}.json?limit=${resultsPerPage}&offset=${
+    (page - 1) * resultsPerPage
+  }`;
 
   axios
     .get(pathJson)
     .then(function (response) {
-      document.getElementById("loader").style.display = "none";
-      const risultati = document.getElementById("risultati");
-      risultati.innerHTML = "";
+      loader.style.display = "none";
+
+      // Solo alla prima pagina, reset dei risultati
+      if (page === 1) {
+        risultati.innerHTML = "";
+      }
 
       const data = response.data;
 
       if (_.isEmpty(data.works)) {
-        risultati.innerHTML = `<p>Nessun risultato trovato per la categoria inserita.</p>`;
+        if (page === 1) {
+          risultati.innerHTML = `<p>Nessun risultato trovato per la categoria inserita.</p>`;
+        } else {
+          alert("Non ci sono più risultati disponibili");
+        }
+        loadMoreContainer.style.display = "none";
         return;
       }
 
@@ -34,7 +69,7 @@ document.getElementById("btn-categoria").addEventListener("click", function () {
         const key = libro.key;
 
         risultati.innerHTML += `
-          <div class="card" style="width: 18rem;">
+          <div class="card" style="width: 18rem; margin-bottom: 20px;">
             <div class="card-body">
               <h5 class="card-title">${titolo}</h5>
               <p class="card-text">${autore}</p>
@@ -45,20 +80,32 @@ document.getElementById("btn-categoria").addEventListener("click", function () {
           </div>
         `;
       });
+
+      // Mostra il bottone "carica di più" solo se ha senso
+      loadMoreContainer.style.display =
+        data.works.length >= resultsPerPage ? "block" : "none";
     })
     .catch(function (error) {
-      document.getElementById("loader").style.display = "none";
+      loader.style.display = "none";
       console.error("Errore durante la richiesta:", error);
     });
+}
+
+// Gestione del pulsante "Carica più risultati"
+btnLoadMore.addEventListener("click", function () {
+  currentPage++;
+  loader.style.display = "block";
+  loadBooks(currentCategory, currentPage);
 });
 
+// Gestione del dettaglio libro
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-dettaglio")) {
     const button = event.target;
     const key = button.getAttribute("data-key");
     const titoloModale = button.getAttribute("data-titolo");
 
-    document.getElementById("title-modal").textContent = titoloModale;
+    titleModal.textContent = titoloModale;
 
     const path = `https://openlibrary.org${key}.json`;
 
@@ -76,10 +123,10 @@ document.addEventListener("click", function (event) {
           }
         }
 
-        document.getElementById("modale-description").textContent = description;
+        modalDescription.textContent = description;
       })
       .catch(function (error) {
-        document.getElementById("modale-description").textContent =
+        modalDescription.textContent =
           "Errore nel caricamento della descrizione";
         console.error("Errore durante la richiesta:", error);
       });
