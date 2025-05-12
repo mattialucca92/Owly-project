@@ -1,4 +1,3 @@
-// Elementi DOM centrali
 const btnCategoria = document.getElementById("btn-categoria");
 const btnLoadMore = document.getElementById("btn-load-more");
 const categoriaInput = document.getElementById("categoria");
@@ -8,12 +7,10 @@ const loadMoreContainer = document.getElementById("load-more-container");
 const titleModal = document.getElementById("title-modal");
 const modalDescription = document.getElementById("modale-description");
 
-// Variabili globali per la paginazione
 let currentCategory = "";
 let currentPage = 1;
 const resultsPerPage = 10;
 
-// Event listener per la ricerca
 btnCategoria.addEventListener("click", function () {
   const categoria = _.toLower(_.trim(categoriaInput.value));
 
@@ -22,7 +19,6 @@ btnCategoria.addEventListener("click", function () {
     return;
   }
 
-  // Reset paginazione
   currentCategory = categoria;
   currentPage = 1;
 
@@ -33,7 +29,6 @@ btnCategoria.addEventListener("click", function () {
   loadBooks(currentCategory, currentPage);
 });
 
-// Funzione per caricare i libri
 function loadBooks(category, page) {
   const pathJson = `https://openlibrary.org/subjects/${category}.json?limit=${resultsPerPage}&offset=${
     (page - 1) * resultsPerPage
@@ -44,7 +39,6 @@ function loadBooks(category, page) {
     .then(function (response) {
       loader.style.display = "none";
 
-      // Solo alla prima pagina, reset dei risultati
       if (page === 1) {
         risultati.innerHTML = "";
       }
@@ -81,7 +75,6 @@ function loadBooks(category, page) {
         `;
       });
 
-      // Mostra il bottone "carica di più" solo se ha senso
       loadMoreContainer.style.display =
         data.works.length >= resultsPerPage ? "block" : "none";
     })
@@ -91,14 +84,12 @@ function loadBooks(category, page) {
     });
 }
 
-// Gestione del pulsante "Carica più risultati"
 btnLoadMore.addEventListener("click", function () {
   currentPage++;
   loader.style.display = "block";
   loadBooks(currentCategory, currentPage);
 });
 
-// Gestione del dettaglio libro
 document.addEventListener("click", function (event) {
   if (event.target.classList.contains("btn-dettaglio")) {
     const button = event.target;

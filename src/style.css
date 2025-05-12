@@ -137,7 +137,6 @@ body {
 
 /* CSS PER MODALE */
 
-/* Modal CSS che mantiene lo stile del CSS originale */
 .modal-dialog {
   max-width: 500px;
   margin: 1.75rem auto;
@@ -200,7 +199,6 @@ body {
   box-shadow: 0 4px 15px rgba(9, 132, 227, 0.4);
 }
 
-/* Animazione fade del modal */
 .modal.fade .modal-dialog {
   transition: transform 0.3s ease-out;
   transform: translateY(-10px);
