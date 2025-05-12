@@ -1,0 +1,18 @@
+{
+  "name": "progetto-javascript_advanced2",
+  "version": "1.0.0",
+  "description": "![Screenshot 2025-05-09 172806](https://github.com/user-attachments/assets/b69f1297-46de-4ee1-836a-b3e362530afe)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^6.3.5"
+  }
+}
