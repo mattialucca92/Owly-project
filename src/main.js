@@ -1,3 +1,13 @@
+// Importa librerie da npm
+import axios from "axios";
+import _ from "lodash";
+import "bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
+
+
+// Importa i tuoi stili personalizzati
+import "./style.css";
+
 const btnCategoria = document.getElementById("btn-categoria");
 const btnLoadMore = document.getElementById("btn-load-more");
 const categoriaInput = document.getElementById("categoria");

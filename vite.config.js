@@ -1,8 +1,15 @@
-// vite.config.js
+import { defineConfig } from "vite";
 export default {
   base: "./", // Usa percorsi relativi invece di assoluti
   build: {
     outDir: "dist",
-    // altre configurazioni...
+  },
+  css: {
+    preprocessorOptions: {
+      // altre configurazioni
+    },
+    optimizeDeps: {
+    include: ['normalize.css']
+  }
   },
 };
