@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 export default {
-  base: '/Owly-project/', // Usa percorsi relativi invece di assoluti
+  base: "./", // Usa percorsi relativi invece di assoluti
   build: {
     outDir: "dist",
   },
